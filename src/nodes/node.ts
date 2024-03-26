@@ -102,15 +102,16 @@ export async function node(
     setNodeIsReady(nodeId);
   });
 
-  function sendMessage(message: Message){
-    for (let index = 0; index < N; index++){
-      fetch(`http://localhost:${BASE_NODE_PORT + index}/message`, {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(message)
-      });
+  function sendMessage(message: Message) {
+    for (let index = 0; index < N; index++) {
+        fetch(`http://localhost:${BASE_NODE_PORT + index}/message`, {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(message)
+        }).catch(err => console.error(`Error sending message to node ${index}:`, err));
     }
-  }
+}
+
 
   function collectMessage(msg: Message){
     let messages = msg.type === "R" ? messagesR : messagesP;
