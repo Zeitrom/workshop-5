@@ -36,10 +36,11 @@ describe("Ben-Or decentralized consensus algorithm", () => {
 
     afterEach(async () => {
       await stopConsensus(servers.length);
-      await delay(100);
+      await delay(100); // You have this delay, but make sure it's sufficient
       await closeAllServers(servers);
-      servers.splice(0);
-    });
+      servers = []; // Clear the servers array to start fresh for the next test
+  });
+  
 
     it("Can start 2 healthy nodes and 1 faulty node - 2pts", async () => {
       const faultyArray = [true, false, false];
@@ -118,14 +119,15 @@ describe("Ben-Or decentralized consensus algorithm", () => {
   });
 
   describe("Testing Ben-Or implementation - 16 pt", () => {
-    const servers: http.Server[] = [];
+    let servers: http.Server[] = [];
 
     afterEach(async () => {
       await stopConsensus(servers.length);
-      await delay(100);
+      await delay(100); // You have this delay, but make sure it's sufficient
       await closeAllServers(servers);
-      servers.splice(0);
-    });
+      servers = []; // Clear the servers array to start fresh for the next test
+  });
+  
 
     const timeLimit = 2000; // 2s
 
